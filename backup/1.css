@@ -1,0 +1,227 @@
+/* === Variabel Global & Reset Dasar === */
+:root {
+    --font-primary: 'Inter', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+
+    --color-text-primary: #2c3e50; /* Biru tua keabuan */
+    --color-text-secondary: #7f8c8d; /* Abu-abu lembut */
+    --color-background: #f8f9fa; /* Putih gading */
+    --color-border: #e9ecef;     /* Abu-abu sangat terang */
+    --color-timeline: #bdc3c7;   /* Abu-abu untuk garis waktu */
+    --color-marker: #3498db;     /* Biru untuk penanda waktu */
+
+    --color-tag-new: #2ecc71;         /* Hijau untuk "Baru" */
+    --color-tag-new-bg: #e8f8f0;
+    --color-tag-improvement: #f39c12; /* Oranye untuk "Peningkatan" */
+    --color-tag-improvement-bg: #fef5e7;
+    --color-tag-fix: #e74c3c;           /* Merah untuk "Perbaikan" */
+    --color-tag-fix-bg: #fdecea;
+
+    --spacing-unit: 8px;
+    --border-radius: 4px;
+    --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    padding: calc(var(--spacing-unit) * 3);
+}
+
+/* === Komponen Changelog Utama === */
+.changelog-component {
+    max-width: 700px;
+    margin: 0 auto; /* Pusatkan komponen */
+    background-color: #ffffff;
+    padding: calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-soft);
+}
+
+.changelog-title {
+    font-size: clamp(1.5rem, 5vw, 2rem); /* Ukuran font responsif */
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    text-align: center;
+    color: var(--color-text-primary);
+}
+
+/* === Garis Waktu (Timeline) === */
+.changelog-timeline {
+    position: relative; /* Konteks untuk garis waktu absolut */
+    padding-left: calc(var(--spacing-unit) * 5); /* Ruang untuk garis dan penanda */
+}
+
+/* Membuat garis vertikal untuk timeline */
+.changelog-timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--spacing-unit) * 1.5); /* Posisi garis */
+    top: var(--spacing-unit);
+    bottom: var(--spacing-unit);
+    width: 3px; /* Ketebalan garis */
+    background-color: var(--color-timeline);
+    border-radius: 3px;
+}
+
+/* === Entri Changelog === */
+.changelog-entry {
+    position: relative; /* Konteks untuk entry-marker */
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    padding-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.changelog-entry:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0; /* Tidak perlu padding bawah untuk item terakhir */
+}
+
+/* Penanda pada Garis Waktu */
+.entry-marker {
+    position: absolute;
+    left: calc(var(--spacing-unit) * 1.5 - var(--spacing-unit) * 0.75 + 1.5px); /* (posisi garis - setengah lebar marker + setengah tebal garis) */
+    top: calc(var(--spacing-unit) * 0.5); /* Sesuaikan agar pas dengan header */
+    width: calc(var(--spacing-unit) * 1.5);
+    height: calc(var(--spacing-unit) * 1.5);
+    background-color: var(--color-marker);
+    border: 2px solid var(--color-background); /* Border agar terlihat "mengambang" di atas garis */
+    border-radius: 50%;
+    z-index: 1; /* Di atas garis timeline */
+}
+
+.entry-content {
+    /* Konten utama sedikit ke kanan dari garis */
+}
+
+.entry-header {
+    display: flex; /* Gunakan flexbox untuk layout header */
+    justify-content: space-between; /* Versi di kiri, tanggal di kanan */
+    align-items: baseline; /* Sejajarkan baseline teks */
+    margin-bottom: var(--spacing-unit);
+    padding-top: calc(var(--spacing-unit) * 0.25); /* Sedikit padding atas agar marker pas */
+}
+
+.entry-version {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.entry-details {
+    /* Tidak perlu style khusus, tapi bisa ditambahkan jika perlu */
+}
+
+.entry-summary {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    line-height: 1.7;
+}
+
+/* === Daftar Perubahan === */
+.changes-list {
+    list-style-type: none; /* Hapus bullet default */
+    padding-left: 0; /* Hapus padding kiri default ul */
+}
+
+.change-item {
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-unit);
+    padding-left: calc(var(--spacing-unit) * 2.5); /* Indentasi untuk item list */
+    position: relative; /* Untuk custom bullet/marker */
+}
+
+/* Custom bullet untuk item perubahan */
+.change-item::before {
+    content: '•'; /* Bisa diganti dengan SVG atau karakter lain */
+    position: absolute;
+    left: var(--spacing-unit);
+    top: 0;
+    color: var(--color-marker);
+    font-size: 1.2em; /* Ukuran bullet */
+    line-height: inherit; /* Sesuaikan dengan line-height item */
+}
+
+/* Styling untuk tipe perubahan */
+.change-type {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: calc(var(--spacing-unit) * 0.25) calc(var(--spacing-unit) * 0.75);
+    border-radius: var(--border-radius);
+    margin-right: var(--spacing-unit);
+    display: inline-block; /* Agar bisa diberi padding */
+    vertical-align: middle; /* Sejajarkan dengan teks */
+}
+
+.change-type.new {
+    color: var(--color-tag-new);
+    background-color: var(--color-tag-new-bg);
+}
+.change-type.improvement {
+    color: var(--color-tag-improvement);
+    background-color: var(--color-tag-improvement-bg);
+}
+.change-type.fix {
+    color: var(--color-tag-fix);
+    background-color: var(--color-tag-fix-bg);
+}
+
+/* === Responsif === */
+@media (max-width: 600px) {
+    body {
+        padding: var(--spacing-unit);
+    }
+    .changelog-component {
+        padding: calc(var(--spacing-unit) * 2);
+    }
+    .changelog-timeline {
+        padding-left: calc(var(--spacing-unit) * 3.5); /* Kurangi padding kiri untuk timeline */
+    }
+    .changelog-timeline::before {
+        left: var(--spacing-unit); /* Geser garis ke kiri */
+    }
+    .entry-marker {
+        /* Sesuaikan posisi marker agar tetap pas dengan garis */
+        left: calc(var(--spacing-unit) - var(--spacing-unit) * 0.75 + 1.5px);
+    }
+    .entry-header {
+        flex-direction: column; /* Susun versi dan tanggal secara vertikal */
+        align-items: flex-start; /* Rata kiri */
+        gap: calc(var(--spacing-unit) * 0.5); /* Jarak antara versi dan tanggal */
+    }
+    .entry-version {
+        font-size: 1.1rem;
+    }
+    .entry-date {
+        font-size: 0.8rem;
+    }
+    .change-item {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .changelog-title {
+        font-size: 1.3rem;
+    }
+    .change-type {
+        display: block; /* Buat tipe perubahan memenuhi lebar di layar sangat kecil */
+        margin-bottom: calc(var(--spacing-unit) * 0.5);
+        text-align: center; /* Pusatkan teks tipe perubahan */
+    }
+}

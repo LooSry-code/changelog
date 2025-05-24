@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Changelog - Project X</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <main class="changelog">
+            <header class="changelog__header">
+                <h1 class="changelog__main-title">What's New in Project X</h1>
+                <p class="changelog__subtitle">Stay updated with the latest features, improvements, and fixes.</p>
+            </header>
+
+            <div class="changelog__timeline">
+                <article class="changelog__entry" aria-labelledby="version-3.0.0">
+                    <div class="changelog__marker-line">
+                        <div class="changelog__marker"></div>
+                    </div>
+                    <div class="changelog__entry-content">
+                        <header class="changelog__entry-header">
+                            <h2 class="changelog__version" id="version-3.0.0">Version 3.0.0 <span class="changelog__tag changelog__tag--major">Major</span></h2>
+                            <time class="changelog__date" datetime="2025-07-15">July 15, 2025</time>
+                        </header>
+                        <div class="changelog__entry-summary">
+                            <p>A significant milestone! Version 3.0 introduces a completely revamped user interface, a powerful new API, and substantial performance gains across the entire platform.</p>
+                        </div>
+                        <div class="changelog__entry-details">
+                            <section class="changes__category" aria-labelledby="cat-breaking-3.0.0">
+                                <h3 class="changes__category-title" id="cat-breaking-3.0.0">
+                                    <span class="changes__type-icon" aria-hidden="true">⚠️</span> Breaking Changes
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">The v1 API (<code>/api/v1/*</code>) is now deprecated and will be removed in v3.2.0. Please migrate to the new v2 API (<code>/api/v2/*</code>). <a href="/docs/api-migration" class="changes__item-link" aria-label="API v1 deprecation notice">Details</a></li>
+                                    <li class="changes__item">User authentication flow has been updated; older client libraries may require an update.</li>
+                                </ul>
+                            </section>
+
+                            <section class="changes__category" aria-labelledby="cat-new-3.0.0">
+                                <h3 class="changes__category-title" id="cat-new-3.0.0">
+                                    <span class="changes__type-icon" aria-hidden="true">🚀</span> New Features
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Completely redesigned User Interface (UI) with enhanced a Deno-based runtime.</li>
+                                    <li class="changes__item">Introduced a new GraphQL API endpoint (<code>/graphql</code>) for flexible data querying. <a href="#" class="changes__item-link" aria-label="Issue #234">#234</a></li>
+                                    <li class="changes__item">Real-time collaboration features added to document editing.</li>
+                                </ul>
+                            </section>
+
+                            <section class="changes__category" aria-labelledby="cat-improvements-3.0.0">
+                                <h3 class="changes__category-title" id="cat-improvements-3.0.0">
+                                    <span class="changes__type-icon" aria-hidden="true">✨</span> Improvements
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Overall application load time reduced by an average of 50% due to optimized asset bundling and code splitting.</li>
+                                    <li class="changes__item">Database queries for large datasets are now significantly faster.</li>
+                                    <li class="changes__item">Improved keyboard navigation and screen reader support throughout the application.</li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="changelog__entry" aria-labelledby="version-2.5.1">
+                    <div class="changelog__marker-line">
+                        <div class="changelog__marker"></div>
+                    </div>
+                    <div class="changelog__entry-content">
+                        <header class="changelog__entry-header">
+                            <h2 class="changelog__version" id="version-2.5.1">Version 2.5.1 <span class="changelog__tag changelog__tag--patch">Patch</span></h2>
+                            <time class="changelog__date" datetime="2025-06-28">June 28, 2025</time>
+                        </header>
+                        <div class="changelog__entry-summary">
+                            <p>This patch release addresses critical security vulnerabilities and includes minor bug fixes.</p>
+                        </div>
+                        <div class="changelog__entry-details">
+                            <section class="changes__category" aria-labelledby="cat-security-2.5.1">
+                                <h3 class="changes__category-title" id="cat-security-2.5.1">
+                                    <span class="changes__type-icon" aria-hidden="true">🔒</span> Security Fixes
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Patched a Cross-Site Scripting (XSS) vulnerability in the comment section (CVE-2025-12345).</li>
+                                    <li class="changes__item">Updated third-party libraries with known security advisories.</li>
+                                </ul>
+                            </section>
+                            <section class="changes__category" aria-labelledby="cat-fixes-2.5.1">
+                                <h3 class="changes__category-title" id="cat-fixes-2.5.1">
+                                    <span class="changes__type-icon" aria-hidden="true">🐛</span> Bug Fixes
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Fixed an issue where file uploads would occasionally fail on slow connections. <a href="#" class="changes__item-link" aria-label="Pull Request #501">PR#501</a></li>
+                                    <li class="changes__item">Corrected a typo in the French localization of the settings page.</li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="changelog__entry" aria-labelledby="version-2.5.0">
+                    <div class="changelog__marker-line">
+                        <div class="changelog__marker"></div>
+                    </div>
+                    <div class="changelog__entry-content">
+                        <header class="changelog__entry-header">
+                            <h2 class="changelog__version" id="version-2.5.0">Version 2.5.0 <span class="changelog__tag changelog__tag--minor">Minor</span></h2>
+                            <time class="changelog__date" datetime="2025-06-01">June 01, 2025</time>
+                        </header>
+                        <div class="changelog__entry-summary">
+                            <p>New integrations, performance tweaks, and enhancements to the developer API.</p>
+                        </div>
+                        <div class="changelog__entry-details">
+                            <section class="changes__category" aria-labelledby="cat-new-2.5.0">
+                                <h3 class="changes__category-title" id="cat-new-2.5.0">
+                                    <span class="changes__type-icon" aria-hidden="true">🚀</span> New Features
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Added integration with Slack for real-time notifications.</li>
+                                    <li class="changes__item">New API endpoints for managing user teams.</li>
+                                </ul>
+                            </section>
+                            <section class="changes__category" aria-labelledby="cat-improvements-2.5.0">
+                                <h3 class="changes__category-title" id="cat-improvements-2.5.0">
+                                    <span class="changes__type-icon" aria-hidden="true">✨</span> Improvements
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Improved error handling and reporting in the API.</li>
+                                    <li class="changes__item">UI refinements for dark mode theme.</li>
+                                </ul>
+                            </section>
+                             <section class="changes__category" aria-labelledby="cat-docs-2.5.0">
+                                <h3 class="changes__category-title" id="cat-docs-2.5.0">
+                                    <span class="changes__type-icon" aria-hidden="true">📄</span> Documentation
+                                </h3>
+                                <ul class="changes__list">
+                                    <li class="changes__item">Published new tutorials for getting started with the v2 API.</li>
+                                    <li class="changes__item">Added comprehensive documentation for the new Slack integration.</li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </article>
+            </div> <footer class="changelog__footer">
+                <p>For more details, visit our <a href="/docs">documentation</a> or contact <a href="/support">support</a>.</p>
+            </footer>
+        </main> </div> </body>
+</html>

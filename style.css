@@ -1,0 +1,405 @@
+/* === Global Styles & Custom Properties === */
+:root {
+    /* Typography */
+    --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-mono: 'Fira Code', Menlo, Monaco, Consolas, "Courier New", monospace;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+
+    /* Colors - Professional & Modern Palette */
+    --color-text: #333D49;                 /* Dark Grey for primary text */
+    --color-text-muted: #6B7280;           /* Lighter Grey for secondary text */
+    --color-text-headings: #111827;        /* Very Dark Grey/Black for headings */
+    --color-background: #F9FAFB;           /* Very Light Grey for page background */
+    --color-surface: #FFFFFF;              /* White for card backgrounds */
+    --color-border: #E5E7EB;               /* Light Grey for borders */
+    --color-primary: #4F46E5;              /* Indigo for primary actions/markers */
+    --color-primary-light: #EEF2FF;        /* Light Indigo for backgrounds */
+
+    /* Change Type Tags */
+    --color-tag-new-text: #065F46;
+    --color-tag-new-bg: #D1FAE5;
+    --color-tag-improvement-text: #92400E;
+    --color-tag-improvement-bg: #FEF3C7;
+    --color-tag-fix-text: #991B1B;
+    --color-tag-fix-bg: #FEE2E2;
+    --color-tag-security-text: #581C87;
+    --color-tag-security-bg: #F3E8FF;
+    --color-tag-docs-text: #065F46; /* Reusing green for docs */
+    --color-tag-docs-bg: #D1FAE5;
+    --color-tag-breaking-text: #7F1D1D;
+    --color-tag-breaking-bg: #FECACA;
+
+    /* Version Tags */
+    --color-tag-major-text: #991B1B;
+    --color-tag-major-bg: #FEE2E2;
+    --color-tag-minor-text: #065F46;
+    --color-tag-minor-bg: #D1FAE5;
+    --color-tag-patch-text: #555;
+    --color-tag-patch-bg: #E5E7EB;
+
+
+    /* Spacing & Sizing */
+    --spacing-unit: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 6px;
+    --max-width-container: 800px;
+
+    /* Transitions & Shadows */
+    --transition-duration: 0.2s;
+    --transition-timing: ease-in-out;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Basic Reset & Body Styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family-sans);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: var(--line-height-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.page-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: calc(var(--spacing-unit) * 4) calc(var(--spacing-unit) * 2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Visually Hidden (for screen readers) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+
+/* === Changelog Component === */
+.changelog {
+    width: 100%;
+    max-width: var(--max-width-container);
+    background-color: transparent; /* Timeline will be on the page bg */
+}
+
+.changelog__header {
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 6);
+    padding: calc(var(--spacing-unit) * 2) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.changelog__main-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--color-text-headings);
+    font-weight: 700;
+    margin-bottom: var(--spacing-unit);
+}
+
+.changelog__subtitle {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Timeline Structure */
+.changelog__timeline {
+    position: relative;
+    padding-left: calc(var(--spacing-unit) * 6); /* Space for marker and line */
+}
+
+/* The main vertical timeline bar */
+.changelog__timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--spacing-unit) * 2); /* Centering the line within the padding */
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--color-border);
+    border-radius: 3px;
+}
+
+/* Individual Changelog Entry */
+.changelog__entry {
+    display: flex; /* Using flex for marker and content alignment */
+    position: relative; /* For marker positioning */
+    margin-bottom: calc(var(--spacing-unit) * 6);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s var(--transition-timing) forwards;
+}
+
+/* Staggered animation for entries */
+.changelog__entry:nth-child(1) { animation-delay: 0.1s; }
+.changelog__entry:nth-child(2) { animation-delay: 0.2s; }
+.changelog__entry:nth-child(3) { animation-delay: 0.3s; }
+/* Add more if needed */
+
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.changelog__marker-line {
+    flex-shrink: 0;
+    width: calc(var(--spacing-unit) * 6); /* Same as timeline padding-left */
+    position: relative; /* For absolute positioning of the marker relative to the line's space */
+    display: flex;
+    justify-content: center; /* Center the marker horizontally */
+}
+
+.changelog__marker {
+    width: calc(var(--spacing-unit) * 2);
+    height: calc(var(--spacing-unit) * 2);
+    background-color: var(--color-primary);
+    border: 3px solid var(--color-surface); /* Creates a "hollow" effect over the line */
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: calc(var(--spacing-unit) * 0.5); /* Align with top of content header */
+    transform: translateX(-50%);
+    z-index: 1; /* Above the timeline bar */
+}
+
+.changelog__entry-content {
+    flex-grow: 1;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    padding: calc(var(--spacing-unit) * 2.5);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--transition-duration) var(--transition-timing);
+}
+
+.changelog__entry-content:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.changelog__entry-header {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for version tag and date */
+    justify-content: space-between;
+    align-items: baseline; /* Align text baselines */
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-unit);
+}
+
+.changelog__version {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+    font-weight: 700;
+    color: var(--color-text-headings);
+    margin-right: var(--spacing-unit); /* Space before tag */
+}
+
+.changelog__tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: calc(var(--spacing-unit) * 0.25) calc(var(--spacing-unit) * 0.75);
+    border-radius: var(--border-radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: var(--spacing-unit); /* Space after tag if date is on same line */
+}
+.changelog__tag--major { background-color: var(--color-tag-major-bg); color: var(--color-tag-major-text); }
+.changelog__tag--minor { background-color: var(--color-tag-minor-bg); color: var(--color-tag-minor-text); }
+.changelog__tag--patch { background-color: var(--color-tag-patch-bg); color: var(--color-tag-patch-text); }
+
+
+.changelog__date {
+    font-family: var(--font-family-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    white-space: nowrap; /* Prevent date from wrapping */
+}
+
+.changelog__entry-summary {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    line-height: 1.7;
+}
+
+.changelog__entry-details {
+    /* Container for categories of changes */
+}
+
+.changes__category {
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+}
+.changes__category:last-child {
+    margin-bottom: 0;
+}
+
+.changes__category-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-headings);
+    margin-bottom: var(--spacing-unit);
+    display: flex;
+    align-items: center;
+}
+
+.changes__type-icon {
+    margin-right: var(--spacing-unit);
+    font-size: 1.1em; /* Make emoji slightly larger */
+    line-height: 1; /* Ensure proper alignment */
+}
+
+.changes__list {
+    list-style-type: none;
+    padding-left: calc(var(--spacing-unit) * 0.5); /* Slight indent */
+}
+
+.changes__item {
+    font-size: 0.9375rem; /* 15px */
+    color: var(--color-text);
+    margin-bottom: var(--spacing-unit);
+    padding-left: calc(var(--spacing-unit) * 2.5);
+    position: relative;
+}
+
+/* Custom bullet for change items */
+.changes__item::before {
+    content: '–'; /* Using an en-dash for a cleaner look */
+    position: absolute;
+    left: var(--spacing-unit);
+    top: 0px; /* Fine-tune vertical alignment */
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.changes__item-link {
+    font-family: var(--font-family-mono);
+    font-size: 0.8em;
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-left: var(--spacing-unit);
+    border-bottom: 1px dotted var(--color-primary);
+    transition: color var(--transition-duration) var(--transition-timing), border-bottom-color var(--transition-duration) var(--transition-timing);
+}
+
+.changes__item-link:hover,
+.changes__item-link:focus {
+    color: var(--color-text-headings);
+    border-bottom-color: var(--color-text-headings);
+    outline: none; /* Add custom focus style if removing outline */
+}
+
+/* Specific Tag Styles */
+.changes__category-title[id^="cat-new"] .changes__type-icon { color: var(--color-tag-new-text); }
+.changes__category-title[id^="cat-improvements"] .changes__type-icon { color: var(--color-tag-improvement-text); }
+.changes__category-title[id^="cat-fixes"] .changes__type-icon { color: var(--color-tag-fix-text); }
+.changes__category-title[id^="cat-security"] .changes__type-icon { color: var(--color-tag-security-text); }
+.changes__category-title[id^="cat-docs"] .changes__type-icon { color: var(--color-tag-docs-text); }
+.changes__category-title[id^="cat-breaking"] .changes__type-icon { color: var(--color-tag-breaking-text); }
+
+
+/* Footer */
+.changelog__footer {
+    text-align: center;
+    margin-top: calc(var(--spacing-unit) * 6);
+    padding-top: calc(var(--spacing-unit) * 3);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.changelog__footer a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.changelog__footer a:hover,
+.changelog__footer a:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+    .changelog__entry-header {
+        /* Allow more flexible wrapping on smaller screens */
+    }
+    .changelog__version {
+        margin-bottom: calc(var(--spacing-unit) * 0.5); /* Add space if date wraps below */
+    }
+}
+
+@media (max-width: 600px) {
+    .page-container {
+        padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+    }
+    .changelog__timeline {
+        padding-left: calc(var(--spacing-unit) * 4);
+    }
+    .changelog__timeline::before {
+        left: calc(var(--spacing-unit) * 1);
+    }
+    .changelog__marker-line {
+        width: calc(var(--spacing-unit) * 4);
+    }
+    .changelog__entry-content {
+        padding: calc(var(--spacing-unit) * 2);
+    }
+    .changelog__entry-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .changelog__date {
+        margin-top: calc(var(--spacing-unit) * 0.5);
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px; /* Adjust base font size for very small screens */
+    }
+    .changelog__timeline {
+        padding-left: calc(var(--spacing-unit) * 3);
+    }
+     .changelog__timeline::before {
+        left: calc(var(--spacing-unit) * 0.5);
+    }
+    .changelog__marker-line {
+        width: calc(var(--spacing-unit) * 3);
+    }
+    .changes__item {
+        padding-left: calc(var(--spacing-unit) * 2);
+    }
+    .changes__item::before {
+        left: calc(var(--spacing-unit) * 0.5);
+    }
+}
